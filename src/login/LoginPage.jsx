@@ -10,7 +10,6 @@ import {
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import Skeleton from 'react-loading-skeleton';
-import { Link } from 'react-router-dom';
 
 import AccountActivationMessage from './AccountActivationMessage';
 import {
@@ -24,7 +23,6 @@ import messages from './messages';
 import {
   FormGroup,
   InstitutionLogistration,
-  PasswordField,
   RedirectLogistration,
   ThirdPartyAuthAlert,
 } from '../common-components';
@@ -33,16 +31,16 @@ import { thirdPartyAuthContextSelector } from '../common-components/data/selecto
 import EnterpriseSSO from '../common-components/EnterpriseSSO';
 import ThirdPartyAuth from '../common-components/ThirdPartyAuth';
 import {
-  DEFAULT_STATE, PENDING_STATE, RESET_PAGE,
+  DEFAULT_STATE, PENDING_STATE,
 } from '../data/constants';
 import {
   getActivationStatus,
   getAllPossibleQueryParams,
   getTpaHint,
   getTpaProvider,
-  updatePathWithQueryParams,
 } from '../data/utils';
 import ResetPasswordSuccess from '../reset-password/ResetPasswordSuccess';
+import imgImage1 from '../data/logo.png';
 
 const LoginPage = (props) => {
   const {
@@ -127,12 +125,12 @@ const LoginPage = (props) => {
     const fieldErrors = { ...errors };
 
     if (emailOrUsername === '') {
-      fieldErrors.emailOrUsername = formatMessage(messages['email.validation.message']);
+      fieldErrors.emailOrUsername = 'Vui lòng nhập email hoặc số điện thoại';
     } else if (emailOrUsername.length < 2) {
-      fieldErrors.emailOrUsername = formatMessage(messages['username.or.email.format.validation.less.chars.message']);
+      fieldErrors.emailOrUsername = 'Email hoặc số điện thoại phải có ít nhất 2 ký tự';
     }
     if (password === '') {
-      fieldErrors.password = formatMessage(messages['password.validation.message']);
+      fieldErrors.password = 'Vui lòng nhập mật khẩu';
     }
 
     return { ...fieldErrors };
@@ -170,9 +168,6 @@ const LoginPage = (props) => {
     const { name } = event.target;
     setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
   };
-  const trackForgotPasswordLinkClick = () => {
-    sendTrackEvent('edx.bi.password-reset_form.toggled', { category: 'user-engagement' });
-  };
 
   const { provider, skipHintedLogin } = getTpaProvider(tpaHint, providers, secondaryProviders);
 
@@ -199,6 +194,7 @@ const LoginPage = (props) => {
       />
     );
   }
+
   return (
     <>
       <Helmet>
@@ -209,7 +205,9 @@ const LoginPage = (props) => {
         redirectUrl={loginResult.redirectUrl}
         finishAuthUrl={finishAuthUrl}
       />
-      <div className="mw-xs mt-3 mb-2">
+
+      {/* Error messages positioned absolutely to not interfere with layout */}
+      <div className="login-figma-alerts">
         <LoginFailureMessage
           errorCode={errorCode.type}
           errorCount={errorCode.count}
@@ -223,59 +221,83 @@ const LoginPage = (props) => {
           messageType={activationMsgType}
         />
         {showResetPasswordSuccessBanner && <ResetPasswordSuccess />}
-        <Form id="sign-in-form" name="sign-in-form">
-          <FormGroup
-            name="emailOrUsername"
-            value={formFields.emailOrUsername}
-            autoComplete="on"
-            handleChange={handleOnChange}
-            handleFocus={handleOnFocus}
-            errorMessage={errors.emailOrUsername}
-            floatingLabel={formatMessage(messages['login.user.identity.label'])}
-          />
-          <PasswordField
-            name="password"
-            value={formFields.password}
-            autoComplete="off"
-            showScreenReaderText={false}
-            showRequirements={false}
-            handleChange={handleOnChange}
-            handleFocus={handleOnFocus}
-            errorMessage={errors.password}
-            floatingLabel={formatMessage(messages['login.password.label'])}
-          />
-          <StatefulButton
-            name="sign-in"
-            id="sign-in"
-            type="submit"
-            variant="brand"
-            className="login-button-width"
-            state={submitState}
-            labels={{
-              default: formatMessage(messages['sign.in.button']),
-              pending: '',
-            }}
-            onClick={handleSubmit}
-            onMouseDown={(event) => event.preventDefault()}
-          />
-          <Link
-            id="forgot-password"
-            name="forgot-password"
-            className="btn btn-link font-weight-500 text-body"
-            to={updatePathWithQueryParams(RESET_PAGE)}
-            onClick={trackForgotPasswordLinkClick}
-          >
-            {formatMessage(messages['forgot.password'])}
-          </Link>
-          <ThirdPartyAuth
-            currentProvider={currentProvider}
-            providers={providers}
-            secondaryProviders={secondaryProviders}
-            handleInstitutionLogin={handleInstitutionLogin}
-            thirdPartyAuthApiStatus={thirdPartyAuthApiStatus}
-            isLoginPage
-          />
-        </Form>
+      </div>
+
+      <div className="login-figma-fullscreen">
+        <div className="login-figma-card" role="region" aria-label="login card">
+          <div className="login-figma-logo" aria-hidden style={{ backgroundImage: `url('${imgImage1}')` }} />
+
+          <div className="login-figma-brand">
+            <span className="brand-text">Học với Chalix</span>
+          </div>
+
+          <div className="login-figma-title">ĐĂNG NHẬP</div>
+
+          <Form id="sign-in-form" name="sign-in-form" className="login-figma-form" onSubmit={handleSubmit}>
+            <div className="login-figma-input-group">
+              <label className="login-figma-label">Email / Số điện thoại</label>
+              <input
+                name="emailOrUsername"
+                type="text"
+                value={formFields.emailOrUsername}
+                placeholder="Email"
+                autoComplete="on"
+                onChange={handleOnChange}
+                onFocus={handleOnFocus}
+                className={`login-figma-input ${errors.emailOrUsername ? 'login-figma-input-error' : ''}`}
+              />
+              {errors.emailOrUsername && (
+                <div className="login-figma-error">{errors.emailOrUsername}</div>
+              )}
+            </div>
+
+            <div className="login-figma-input-group">
+              <label className="login-figma-label">Mật khẩu</label>
+              <input
+                name="password"
+                type="password"
+                value={formFields.password}
+                placeholder="Mật khẩu"
+                autoComplete="off"
+                onChange={handleOnChange}
+                onFocus={handleOnFocus}
+                className={`login-figma-input ${errors.password ? 'login-figma-input-error' : ''}`}
+              />
+              {errors.password && (
+                <div className="login-figma-error">{errors.password}</div>
+              )}
+            </div>
+
+            <StatefulButton
+              name="sign-in"
+              id="sign-in"
+              type="submit"
+              variant="brand"
+              className="login-figma-submit"
+              state={submitState}
+              labels={{
+                default: 'Đăng nhập',
+                pending: '',
+              }}
+              onClick={handleSubmit}
+              onMouseDown={(event) => event.preventDefault()}
+            />
+
+            {/* Hide ThirdPartyAuth for clean Figma design */}
+            <div style={{ display: 'none' }}>
+              <ThirdPartyAuth
+                currentProvider={currentProvider}
+                providers={providers}
+                secondaryProviders={secondaryProviders}
+                handleInstitutionLogin={handleInstitutionLogin}
+                thirdPartyAuthApiStatus={thirdPartyAuthApiStatus}
+                isLoginPage
+              />
+            </div>
+          </Form>
+
+          <div className="login-figma-desc">Sử dụng tài khoản được cấp để đăng nhập</div>
+        </div>
       </div>
     </>
   );
