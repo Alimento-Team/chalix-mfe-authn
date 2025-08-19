@@ -283,7 +283,6 @@ const LoginPage = (props) => {
               onMouseDown={(event) => event.preventDefault()}
             />
 
-            {/* Hide ThirdPartyAuth for clean Figma design */}
             <div style={{ display: 'none' }}>
               <ThirdPartyAuth
                 currentProvider={currentProvider}
