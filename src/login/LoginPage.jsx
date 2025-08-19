@@ -207,7 +207,7 @@ const LoginPage = (props) => {
       />
 
       {/* Error messages positioned absolutely to not interfere with layout */}
-      <div className="login-figma-alerts">
+      <div className="login-alerts">
         <LoginFailureMessage
           errorCode={errorCode.type}
           errorCount={errorCode.count}
@@ -223,19 +223,19 @@ const LoginPage = (props) => {
         {showResetPasswordSuccessBanner && <ResetPasswordSuccess />}
       </div>
 
-      <div className="login-figma-fullscreen">
-        <div className="login-figma-card" role="region" aria-label="login card">
-          <div className="login-figma-logo" aria-hidden style={{ backgroundImage: `url('${imgImage1}')` }} />
+      <div className="login-fullscreen">
+        <div className="login-card" role="region" aria-label="login card">
+          <div className="login-logo" aria-hidden style={{ backgroundImage: `url('${imgImage1}')` }} />
 
-          <div className="login-figma-brand">
+          <div className="login-brand">
             <span className="brand-text">Học với Chalix</span>
           </div>
 
-          <div className="login-figma-title">ĐĂNG NHẬP</div>
+          <div className="login-title">ĐĂNG NHẬP</div>
 
-          <Form id="sign-in-form" name="sign-in-form" className="login-figma-form" onSubmit={handleSubmit}>
-            <div className="login-figma-input-group">
-              <label className="login-figma-label">Email / Số điện thoại</label>
+          <Form id="sign-in-form" name="sign-in-form" className="login-form" onSubmit={handleSubmit}>
+            <div className="login-input-group">
+              <label className="login-label">Email / Số điện thoại</label>
               <input
                 name="emailOrUsername"
                 type="text"
@@ -244,15 +244,15 @@ const LoginPage = (props) => {
                 autoComplete="on"
                 onChange={handleOnChange}
                 onFocus={handleOnFocus}
-                className={`login-figma-input ${errors.emailOrUsername ? 'login-figma-input-error' : ''}`}
+                className={`login-input ${errors.emailOrUsername ? 'login-input-error' : ''}`}
               />
               {errors.emailOrUsername && (
-                <div className="login-figma-error">{errors.emailOrUsername}</div>
+                <div className="login-error">{errors.emailOrUsername}</div>
               )}
             </div>
 
-            <div className="login-figma-input-group">
-              <label className="login-figma-label">Mật khẩu</label>
+            <div className="login-input-group">
+              <label className="login-label">Mật khẩu</label>
               <input
                 name="password"
                 type="password"
@@ -261,10 +261,10 @@ const LoginPage = (props) => {
                 autoComplete="off"
                 onChange={handleOnChange}
                 onFocus={handleOnFocus}
-                className={`login-figma-input ${errors.password ? 'login-figma-input-error' : ''}`}
+                className={`login-input ${errors.password ? 'login-input-error' : ''}`}
               />
               {errors.password && (
-                <div className="login-figma-error">{errors.password}</div>
+                <div className="login-error">{errors.password}</div>
               )}
             </div>
 
@@ -273,7 +273,7 @@ const LoginPage = (props) => {
               id="sign-in"
               type="submit"
               variant="brand"
-              className="login-figma-submit"
+              className="login-submit"
               state={submitState}
               labels={{
                 default: 'Đăng nhập',
@@ -296,7 +296,7 @@ const LoginPage = (props) => {
             </div>
           </Form>
 
-          <div className="login-figma-desc">Sử dụng tài khoản được cấp để đăng nhập</div>
+          <div className="login-desc">Sử dụng tài khoản được cấp để đăng nhập</div>
         </div>
       </div>
     </>
