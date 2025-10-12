@@ -228,7 +228,7 @@ const LoginPage = (props) => {
           <div className="login-logo" aria-hidden style={{ backgroundImage: `url('${imgImage1}')` }} />
 
           <div className="login-brand">
-            <span className="brand-text">Học với Chalix</span>
+            <span className="brand-text">SmartLearn</span>
           </div>
 
           <div className="login-title">ĐĂNG NHẬP</div>
