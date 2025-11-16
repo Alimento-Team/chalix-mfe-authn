@@ -36,20 +36,25 @@ const MainApp = () => {
   // Handler for header navigation (public pages)
   const handleHeaderNavigation = (tab) => {
     const config = getConfig();
-    const lmsBaseUrl = config.LMS_BASE_URL || '';
+    const lmsBaseUrl = config.LMS_BASE_URL;
+    const mfeBaseUrl = config.BASE_URL;
     
     switch (tab) {
       case 'home':
-        window.location.href = `${lmsBaseUrl}/`;
+        // Trang chủ - go to LMS home
+        window.location.href = lmsBaseUrl;
         break;
       case 'category':
-        window.location.href = `${lmsBaseUrl}/courses`;
+        // Danh mục - redirect to login with learner dashboard as next page
+        window.location.href = `${lmsBaseUrl}/login?next=${encodeURIComponent(`${mfeBaseUrl}/learner-dashboard`)}`;
         break;
       case 'learning':
-        window.location.href = `${lmsBaseUrl}/login?next=/dashboard`;
+        // Học tập - go to LMS home (or login if not authenticated)
+        window.location.href = lmsBaseUrl;
         break;
       case 'personalize':
-        window.location.href = `${lmsBaseUrl}/login?next=/dashboard`;
+        // Cá nhân hóa - redirect to login with learner dashboard personalized tab
+        window.location.href = `${lmsBaseUrl}/login?next=${encodeURIComponent(`${mfeBaseUrl}/learner-dashboard?tab=personalized`)}`;
         break;
       default:
         break;
