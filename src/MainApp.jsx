@@ -4,7 +4,6 @@ import { getConfig } from '@edx/frontend-platform';
 import { AppProvider } from '@edx/frontend-platform/react';
 import { Helmet } from 'react-helmet';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { ChalixHeaderWithUserPopup } from '@chalix/frontend-component-header';
 
 import {
   EmbeddedRegistrationRoute, NotFoundPage, registerIcons, UnAuthOnlyRoute, Zendesk,
@@ -33,51 +32,13 @@ import './index.scss';
 registerIcons();
 
 const MainApp = () => {
-  // Handler for header navigation (public pages)
-  const handleHeaderNavigation = (tab) => {
-    const config = getConfig();
-    const lmsBaseUrl = config.LMS_BASE_URL;
-    const mfeBaseUrl = config.BASE_URL;
-    
-    switch (tab) {
-      case 'home':
-        // Trang chủ - go to LMS home
-        window.location.href = lmsBaseUrl;
-        break;
-      case 'category':
-        // Danh mục - redirect to login with learner dashboard as next page
-        window.location.href = `${lmsBaseUrl}/login?next=${encodeURIComponent(`${mfeBaseUrl}/learner-dashboard`)}`;
-        break;
-      case 'learning':
-        // Học tập - go to LMS home (or login if not authenticated)
-        window.location.href = lmsBaseUrl;
-        break;
-      case 'personalize':
-        // Cá nhân hóa - redirect to login with learner dashboard personalized tab
-        window.location.href = `${lmsBaseUrl}/login?next=${encodeURIComponent(`${mfeBaseUrl}/learner-dashboard?tab=personalized`)}`;
-        break;
-      default:
-        break;
-    }
-  };
-
   return (
     <AppProvider store={configureStore()}>
       <Helmet>
         <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
       </Helmet>
       {getConfig().ZENDESK_KEY && <Zendesk />}
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <ChalixHeaderWithUserPopup
-          organizationTitle="PHẦN MỀM HỌC TẬP THÔNG MINH DÀNH CHO CÔNG CHỨC, VIÊN CHỨC"
-          searchPlaceholder="Nhập từ khóa tìm kiếm"
-          baseApiUrl={getConfig().LMS_BASE_URL || ''}
-          logoutUrl="/logout"
-          onNavigate={handleHeaderNavigation}
-          hideUserMenu={true}
-        />
-        <main style={{ flex: 1 }}>
-          <Routes>
+      <Routes>
       <Route path="/" element={<Navigate replace to={updatePathWithQueryParams(REGISTER_PAGE)} />} />
       <Route
         path={REGISTER_EMBEDDED_PAGE}
@@ -96,9 +57,7 @@ const MainApp = () => {
       <Route path={RECOMMENDATIONS} element={<RecommendationsPage />} />
       <Route path={PAGE_NOT_FOUND} element={<NotFoundPage />} />
       <Route path="*" element={<Navigate replace to={PAGE_NOT_FOUND} />} />
-          </Routes>
-        </main>
-      </div>
+      </Routes>
     </AppProvider>
   );
 };
