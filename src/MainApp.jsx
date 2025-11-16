@@ -4,6 +4,7 @@ import { getConfig } from '@edx/frontend-platform';
 import { AppProvider } from '@edx/frontend-platform/react';
 import { Helmet } from 'react-helmet';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { ChalixHeaderWithUserPopup } from '@chalix/frontend-component-header';
 
 import {
   EmbeddedRegistrationRoute, NotFoundPage, registerIcons, UnAuthOnlyRoute, Zendesk,
@@ -31,13 +32,47 @@ import './index.scss';
 
 registerIcons();
 
-const MainApp = () => (
-  <AppProvider store={configureStore()}>
-    <Helmet>
-      <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
-    </Helmet>
-    {getConfig().ZENDESK_KEY && <Zendesk />}
-    <Routes>
+const MainApp = () => {
+  // Handler for header navigation (public pages)
+  const handleHeaderNavigation = (tab) => {
+    const config = getConfig();
+    const lmsBaseUrl = config.LMS_BASE_URL || '';
+    
+    switch (tab) {
+      case 'home':
+        window.location.href = `${lmsBaseUrl}/`;
+        break;
+      case 'category':
+        window.location.href = `${lmsBaseUrl}/courses`;
+        break;
+      case 'learning':
+        window.location.href = `${lmsBaseUrl}/login?next=/dashboard`;
+        break;
+      case 'personalize':
+        window.location.href = `${lmsBaseUrl}/login?next=/dashboard`;
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <AppProvider store={configureStore()}>
+      <Helmet>
+        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
+      </Helmet>
+      {getConfig().ZENDESK_KEY && <Zendesk />}
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <ChalixHeaderWithUserPopup
+          organizationTitle="PHẦN MỀM HỌC TẬP THÔNG MINH DÀNH CHO CÔNG CHỨC, VIÊN CHỨC"
+          searchPlaceholder="Nhập từ khóa tìm kiếm"
+          baseApiUrl={getConfig().LMS_BASE_URL || ''}
+          logoutUrl="/logout"
+          onNavigate={handleHeaderNavigation}
+          hideUserMenu={true}
+        />
+        <main style={{ flex: 1 }}>
+          <Routes>
       <Route path="/" element={<Navigate replace to={updatePathWithQueryParams(REGISTER_PAGE)} />} />
       <Route
         path={REGISTER_EMBEDDED_PAGE}
@@ -56,8 +91,11 @@ const MainApp = () => (
       <Route path={RECOMMENDATIONS} element={<RecommendationsPage />} />
       <Route path={PAGE_NOT_FOUND} element={<NotFoundPage />} />
       <Route path="*" element={<Navigate replace to={PAGE_NOT_FOUND} />} />
-    </Routes>
-  </AppProvider>
-);
+          </Routes>
+        </main>
+      </div>
+    </AppProvider>
+  );
+};
 
 export default MainApp;
