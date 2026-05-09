@@ -240,7 +240,7 @@ const LoginPage = (props) => {
                 name="emailOrUsername"
                 type="text"
                 value={formFields.emailOrUsername}
-                placeholder="Email"
+                placeholder="Nhập email hoặc ID (student_xxx)"
                 autoComplete="on"
                 onChange={handleOnChange}
                 onFocus={handleOnFocus}
