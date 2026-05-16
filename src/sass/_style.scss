@@ -30,6 +30,7 @@ $elevation-level-2-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
 .forgot-password-button-width {
   min-width: 6rem;
 }
+
 .spinner--position-centered {
   left: 0;
   right: 0;
@@ -109,7 +110,7 @@ $elevation-level-2-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
   height: 36px;
   color: var(--pgn-color-primary-base);
 
-  .btn-tpa__image-icon{
+  .btn-tpa__image-icon {
     background-color: transparent;
     max-height: 24px;
     max-width: 24px;
@@ -292,11 +293,13 @@ select.form-control {
   font-size: var(--pgn-typography-font-size-xs) !important;
   filter: drop-shadow($elevation-level-2-shadow) drop-shadow($elevation-level-2-shadow) !important;
   right: 0.2rem !important;
+
   .tooltip-inner {
     background: var(--pgn-color-white);
     display: block;
     color: var(--pgn-color-gray-500);
   }
+
   .arrow::before {
     border-left-color: var(--pgn-color-white);
   }
@@ -317,6 +320,7 @@ select.form-control {
     display: block;
     color: var(--pgn-color-gray-500);
   }
+
   .arrow::before {
     border-top-color: var(--pgn-color-white);
   }
@@ -335,7 +339,7 @@ select.form-control {
   color: var(--pgn-color-gray-700);
 }
 
-.logistration-button:hover{
+.logistration-button:hover {
   color: var(--pgn-color-gray-700);
   text-decoration: none;
 }
@@ -350,6 +354,7 @@ select.form-control {
 .icon-size {
   width: 2.3rem;
 }
+
 .has-floating-label {
   color: var(--pgn-color-gray-500);
 }
@@ -363,13 +368,12 @@ select.form-control {
   font-size: 0.75rem;
 }
 
-.form-group__form-field .form-control:focus ~ .pgn__form-control-floating-label .pgn__form-control-floating-label-content {
-    font-size: 16px;
-    color: var(--pgn-color-primary-700);
+.form-group__form-field .form-control:focus~.pgn__form-control-floating-label .pgn__form-control-floating-label-content {
+  font-size: 16px;
+  color: var(--pgn-color-primary-700);
 }
 
-.form-group__form-field .form-control:not([value='']):not(:focus) ~
-  .pgn__form-control-floating-label .pgn__form-control-floating-label-content {
+.form-group__form-field .form-control:not([value='']):not(:focus)~.pgn__form-control-floating-label .pgn__form-control-floating-label-content {
   font-size: 16px;
 }
 
@@ -406,7 +410,8 @@ select.form-control {
 }
 
 
-@media (max-width: 767px) {
+// Migrated from raw @media (max-width: 767px) → Paragon token (Phase 4)
+@media (--pgn-size-breakpoint-max-width-sm) {
   .welcome-page-content {
     padding-top: 1.5rem !important;
   }
@@ -420,7 +425,8 @@ select.form-control {
 }
 
 // Smaller than Extra Small (Mobile Screens)
-@media (max-width: 464px) {
+// Migrated from raw @media (max-width: 464px) → Paragon xs token (Phase 4)
+@media (--pgn-size-breakpoint-max-width-xs) {
   .btn-social {
     min-width: 100%;
     margin-bottom: 0.75rem;
@@ -435,6 +441,7 @@ select.form-control {
 
   #password-requirement-top {
     display: unset;
+
     .tooltip-inner {
       max-width: inherit;
       min-width: unset !important;
@@ -455,4 +462,16 @@ select.form-control {
 
 .pgn__form-control-decorator-trailing {
   right: 0 !important;
+}
+
+// ======================================================
+// RESPONSIVE: Social auth buttons full-width on mobile (Phase 4 — step 20)
+// Additive-only — default width: 224px for desktop is unchanged.
+// The container .row.m-0 already has flex-wrap: wrap from Bootstrap.
+// ======================================================
+@media (--pgn-size-breakpoint-max-width-sm) {
+  .btn-social {
+    width: 100%;
+    margin-right: 0 !important;
+  }
 }

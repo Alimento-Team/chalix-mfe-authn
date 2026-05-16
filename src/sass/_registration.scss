@@ -2,11 +2,11 @@
   min-width: 14.4rem;
 }
 
-.pgn__form-autosuggest__wrapper > .pgn__form-group {
+.pgn__form-autosuggest__wrapper>.pgn__form-group {
   margin-bottom: 0 !important;
 }
 
-.email-suggestion-alert-error  {
+.email-suggestion-alert-error {
   padding: 0.5rem 1rem;
 
   .email-suggestion__close {
@@ -22,7 +22,7 @@
     line-height: 1.25rem;
   }
 
-  .alert-link  {
+  .alert-link {
     color: var(--pgn-color-primary-base) !important;
 
     &:hover {
@@ -46,6 +46,7 @@
     font-size: 0.75rem;
     line-height: 1.25rem;
   }
+
   margin-left: 3px;
 }
 
@@ -90,10 +91,12 @@
   display: inline-flex;
 }
 
-@media (max-width: 372px) {
+// Migrated from raw @media (max-width: 372px) → Paragon xs token (Phase 4)
+@media (--pgn-size-breakpoint-max-width-xs) {
   .username-scroll-suggested--form-field {
     width: 11rem !important;
   }
+
   .username-suggestions__close__button {
     right: 0.5rem;
   }
@@ -103,6 +106,7 @@
   .username-scroll-suggested--form-field {
     width: 15rem;
   }
+
   .username-suggestions__close__button {
     right: 0.5rem;
   }
