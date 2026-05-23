@@ -225,10 +225,11 @@ const LoginPage = (props) => {
 
       <div className="login-fullscreen">
         <div className="login-card" role="region" aria-label="login card">
-          <div className="login-logo" aria-hidden style={{ backgroundImage: `url('${imgImage1}')` }} />
-
-          <div className="login-brand">
-            <span className="brand-text">SmartLearn</span>
+          <div className="login-header-row">
+            <div className="login-logo" aria-hidden style={{ backgroundImage: `url('${imgImage1}')` }} />
+            <div className="login-brand">
+              <span className="brand-text">SmartLearn</span>
+            </div>
           </div>
 
           <div className="login-title">ĐĂNG NHẬP</div>
