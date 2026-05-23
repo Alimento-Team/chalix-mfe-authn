@@ -207,44 +207,116 @@
     min-width: 6rem;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 500px) {
+/* ── Mobile: full responsive overhaul ────────────────────────────────────
+   The desktop design uses position:absolute for almost every element.
+   On narrow screens we switch the entire card to normal document flow
+   so nothing can be clipped, offset, or hidden. */
+@media (max-width: 576px) {
+
+    /* Switch the fullscreen overlay to static flow — avoids position:fixed
+       misbehaving when a parent container overflows the viewport. */
+    .login-fullscreen {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100vh !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        background-color: #e0f2fe !important;
+    }
+
+    .login-alerts {
+        position: static !important;
+        transform: none !important;
+        left: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 8px 16px 0 !important;
+        box-sizing: border-box !important;
+    }
+
     .login-card {
-        width: 100%;
-        max-width: 400px;
-        height: auto;
-        min-height: 500px;
-        padding: 20px;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: unset !important;
+        padding: 24px 20px 32px !important;
+        overflow: visible !important;
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .login-logo {
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        width: 72px !important;
+        height: 72px !important;
+        margin: 0 auto 8px !important;
+        display: block !important;
+        flex-shrink: 0 !important;
+    }
+
+    .login-brand {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        justify-content: center !important;
+        margin-bottom: 12px !important;
+    }
+
+    .brand-text {
+        font-size: 22px !important;
+        line-height: 1.2 !important;
+    }
+
+    .login-title {
+        position: static !important;
+        transform: none !important;
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        text-align: center !important;
+        font-size: 22px !important;
+        margin: 4px 0 16px !important;
     }
 
     .login-form {
-        width: 100%;
-        max-width: 350px;
-        position: static;
-        transform: none;
-        top: auto;
-        left: auto;
-        margin-top: 40px;
+        position: static !important;
+        transform: none !important;
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin-top: 0 !important;
+    }
+
+    .login-input-group {
+        height: auto !important;
     }
 
     .login-submit {
         width: 100% !important;
-    }
-
-    .login-title {
-        position: static;
-        transform: none;
-        top: auto;
-        left: auto;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        margin-top: 24px !important;
     }
 
     .login-desc {
-        position: static;
-        transform: none;
-        bottom: auto;
-        left: auto;
-        margin-top: 40px;
+        position: static !important;
+        transform: none !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        white-space: normal !important;
+        margin-top: 32px !important;
+        text-align: center !important;
     }
 }

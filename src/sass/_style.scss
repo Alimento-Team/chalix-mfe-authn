@@ -412,6 +412,22 @@ select.form-control {
 
 // Migrated from raw @media (max-width: 767px) → Paragon token (Phase 4)
 @media (--pgn-size-breakpoint-max-width-sm) {
+
+  .welcome-page-content,
+  .main-content {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    box-sizing: border-box;
+  }
+
+  #password-requirement-top .tooltip-inner {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
   .welcome-page-content {
     padding-top: 1.5rem !important;
   }
@@ -433,10 +449,15 @@ select.form-control {
     margin-right: 0 !important;
   }
 
+  // Keep box-sizing border-box and prevent viewport overflow
   .welcome-page-content,
   .main-content {
-    min-width: 100vw !important;
-    padding: 1.5rem !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 1rem !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
   }
 
   #password-requirement-top {
